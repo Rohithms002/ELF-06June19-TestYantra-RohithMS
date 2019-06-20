@@ -14,5 +14,4 @@ public class EmployeeBean {
 	private int age;
 	private Date joiningDate;
 	private String gender;
-        private String email;
 }
