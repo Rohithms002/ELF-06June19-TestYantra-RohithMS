@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.ListIterator;
 
+@SuppressWarnings({"rawtypes","unchecked"})
 public class ArrayListExample {
 
 	public static void main(String[] args) {
@@ -16,6 +17,9 @@ public class ArrayListExample {
 		al.add("Rohith"); // duplicates are allowed
 		al.add(null);// multiple null allowed
 		al.add(null);
+		
+		
+		
 
 		System.out.println("*** for loop ***");
 
