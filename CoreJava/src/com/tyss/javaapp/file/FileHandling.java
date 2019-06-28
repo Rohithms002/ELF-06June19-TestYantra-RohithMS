@@ -22,16 +22,17 @@ public class FileHandling {
 			System.out.println("path specified is not present");
 		}
 
-		try {
+		try(FileOutputStream fo = new FileOutputStream("D:/file.txt", true)) {
 			String msg = "Hello Rohith";
 			byte[] b = msg.getBytes();
-			FileOutputStream fo = new FileOutputStream("D:/file.txt", true);
+			
 			fo.write(b);
 			System.out.println("printed on file");
 		} catch (FileNotFoundException e) {
 
 			e.printStackTrace();
 		}
+		
 
 		try {
 			FileInputStream fi = new FileInputStream("D:/file.txt");
