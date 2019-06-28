@@ -1,5 +1,8 @@
 package com.testyantra.assessment.lambda;
 
+
+/*14)	WAP to calculate simple interest using lambda expression*/
+
 import lombok.extern.java.Log;
 
 @Log

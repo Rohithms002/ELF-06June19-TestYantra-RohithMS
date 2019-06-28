@@ -1,5 +1,7 @@
 package com.testyantra.assessment.thread;
 
+/*WAP to print the numbers from 1 to 10 using 5 threads, with the thread pool size of 2.*/
+
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
