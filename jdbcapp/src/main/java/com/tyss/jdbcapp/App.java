@@ -1,7 +1,9 @@
 package com.tyss.jdbcapp;
 
 import java.sql.Connection;
+import java.sql.Driver;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -13,23 +15,32 @@ import lombok.extern.java.Log;
  *
  */
 @Log
-public class App {
+public final class App {
 
 	public static void main(String[] args) {
 
-		String sql = "select * from employee_info";
+		String sql = "select * from employee_info where id='?'";
+		String sql2 = "insert into department_info values(700,'hr')";
+		String sql1 = "create database db2";
 		Connection con = null;
 		Statement stmt = null;
 		ResultSet resultset = null;
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
 
 			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/testyantra_db", "root", "root");
+			log.info("" + con.getClass());
 			log.info("" + con + "connection successfull");
-			stmt = con.createStatement();
-			resultset = stmt.executeQuery(sql);
-			log.info("" + "success");
+			/*
+			 * PreparedStatement pstmt = con.prepareStatement(sql); int rs =
+			 * stmt.executeUpdate(sql1);
+			 * 
+			 * pstmt.setInt(1, Integer.parseInt(args[0])); resultset = pstmt.executeQuery();
+			 */
 
+			stmt = con.createStatement();
+			stmt.executeUpdate(sql2);
+
+			log.info("" + "success");
 			while (resultset.next()) {
 
 				log.info("ID " + resultset.getInt(1));
@@ -45,8 +56,6 @@ public class App {
 				log.info("Dept_ID " + resultset.getInt(11));
 				log.info("Mgr_id " + resultset.getInt(12));
 			}
-
-		} catch (ClassNotFoundException e) {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
