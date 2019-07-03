@@ -13,6 +13,7 @@ public class InsertDynamicSqlExampleTwo {
 
 		String sql = "insert into employee_info(id,name,age,gender,salary,phone,joining_date,email,designation,dob,dept_id,mngr_id,account_number)values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		Connection con = null;
+		
 		PreparedStatement pstmt = null;
 		try {
 
@@ -36,7 +37,12 @@ public class InsertDynamicSqlExampleTwo {
 			pstmt.setString(13, args[12]);
 			
 			int rs = pstmt.executeUpdate();
-			log.info("no of rows afftected" + rs);
+			if(rs>0) {
+				log.info("successfully inserted");
+			}else {
+				log.info("failed to insert");
+			}
+			
 
 		} catch (SQLException e) {
 			e.printStackTrace();

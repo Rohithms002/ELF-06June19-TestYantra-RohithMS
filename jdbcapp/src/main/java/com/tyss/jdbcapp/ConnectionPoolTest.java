@@ -1,32 +1,25 @@
 package com.tyss.jdbcapp;
 
+import java.io.IOException;
 import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import lombok.extern.java.Log;
 
 @Log
-public class DynamicSqlExampleTwo {
+public class ConnectionPoolTest{
+
 	public static void main(String[] args) {
 
-		String sql = "select * from employee_info where id=? and mngr_id=?";
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		ResultSet resultset = null;
+		String sql = "select * from employee_info";
 		try {
+			ConnectionPool pool = ConnectionPool.getConnectionPool();
+			Connection con = pool.getConnection();
+			Statement stmt = con.createStatement();
+			ResultSet resultset = stmt.executeQuery(sql);
 
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/testyantra_db", "root", "root");
-			log.info("" + con + "connection successfull");
-			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, Integer.parseInt(args[0]));
-			pstmt.setInt(2, Integer.parseInt(args[1]));
-
-			resultset = pstmt.executeQuery();
-
-			log.info("" + "success");
 			while (resultset.next()) {
 
 				log.info("ID " + resultset.getInt(1));
@@ -42,23 +35,14 @@ public class DynamicSqlExampleTwo {
 				log.info("Dept_ID " + resultset.getInt(11));
 				log.info("Mgr_id " + resultset.getInt(12));
 			}
+			pool.placeConnection(con);
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			try {
-				if (con != null) {
-					con.close();
-				}
-				if (pstmt != null) {
-					pstmt.close();
-				}
-				if (resultset != null) {
-					resultset.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 }

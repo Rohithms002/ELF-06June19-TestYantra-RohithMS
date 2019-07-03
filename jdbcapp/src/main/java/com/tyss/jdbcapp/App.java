@@ -17,27 +17,16 @@ public final class App {
 
 	public static void main(String[] args) {
 
-		String sql = "select * from employee_info where id='?'";
-		Connection con = null;
-		Statement stmt = null;
-		ResultSet resultset = null;
-		try {
+		String sql = "select * from employee_info";
 
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/testyantra_db", "root", "root");
+		try (Connection con = DriverManager.getConnection("jdbc:mysql://tyss.cb1stwnbsldp.ap-south-1.rds.amazonaws.com:3306/testyantra_db", "root", "root1234");
+				Statement stmt = con.createStatement();
+				ResultSet resultset = stmt.executeQuery(sql);) {
 			log.info("" + con.getClass());
 			log.info("" + con + "connection successfull");
-			/*
-			 * PreparedStatement pstmt = con.prepareStatement(sql); int rs =
-			 * stmt.executeUpdate(sql1);
-			 * 
-			 * pstmt.setInt(1, Integer.parseInt(args[0])); resultset = pstmt.executeQuery();
-			 */
-
-			stmt = con.createStatement();
-			resultset=stmt.executeQuery(sql);
 
 			log.info("" + "success");
-			while (resultset.next()) {
+			if (resultset.next()) {
 
 				log.info("ID " + resultset.getInt(1));
 				log.info("Name " + resultset.getString(2));
@@ -55,21 +44,6 @@ public final class App {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			try {
-				if (con != null) {
-					con.close();
-				}
-				if (stmt != null) {
-					stmt.close();
-				}
-				if (resultset != null) {
-					resultset.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
 		}
 	}
-
 }
