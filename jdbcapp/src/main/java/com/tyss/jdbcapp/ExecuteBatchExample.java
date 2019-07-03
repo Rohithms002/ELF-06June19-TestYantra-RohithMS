@@ -2,23 +2,18 @@ package com.tyss.jdbcapp;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
 import lombok.extern.java.Log;
 
-/**
- * JDBC program to update the data into a table!
- *
- */
-
 @Log
-public class InsertStaticSqlExample {
+public class ExecuteBatchExample {
 
 	public static void main(String[] args) {
 
-		String sql2 = "insert into department_info(dept_id,dept_name)values(?,?)";
+		String sql1 = "insert into department_info values (1500,'Analyst')";
+		String sql2 = "insert into department_info values (1600, 'others')";
 		Connection con = null;
 		Statement stmt = null;
 		try {
@@ -28,7 +23,10 @@ public class InsertStaticSqlExample {
 			log.info("" + con + "connection successfull");
 
 			stmt = con.createStatement();
-			int rows = stmt.executeUpdate(sql2);
+			stmt.addBatch(sql1);
+			stmt.addBatch(sql2);
+			int[] rows = stmt.executeBatch();
+
 			log.info("no of rows afftected" + rows);
 
 		} catch (SQLException e) {

@@ -1,9 +1,7 @@
 package com.tyss.jdbcapp;
 
 import java.sql.Connection;
-import java.sql.Driver;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -20,8 +18,6 @@ public final class App {
 	public static void main(String[] args) {
 
 		String sql = "select * from employee_info where id='?'";
-		String sql2 = "insert into department_info values(700,'hr')";
-		String sql1 = "create database db2";
 		Connection con = null;
 		Statement stmt = null;
 		ResultSet resultset = null;
@@ -38,7 +34,7 @@ public final class App {
 			 */
 
 			stmt = con.createStatement();
-			stmt.executeUpdate(sql2);
+			resultset=stmt.executeQuery(sql);
 
 			log.info("" + "success");
 			while (resultset.next()) {
